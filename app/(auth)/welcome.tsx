@@ -1,3 +1,4 @@
+import CustomButton from '@/components/CustomButton'
 import { onboarding } from '@/constants'
 import { router } from 'expo-router'
 import React, { useRef, useState } from 'react'
@@ -8,6 +9,7 @@ import Swiper from 'react-native-swiper'
 const Onboarding = () => {
     const swiperRef = useRef<Swiper>(null);
     const [activeIndex, setActiveIndex] = useState(0);
+    const isLastSlide = activeIndex === onboarding.length - 1;
 
     return (
         <SafeAreaView className='flex h-full items-center justify-between bg-white'>
@@ -41,6 +43,11 @@ const Onboarding = () => {
                     </View>
                 ))}
             </Swiper>
+                <CustomButton 
+                title={isLastSlide ? 'Get Started' : 'Next'}
+                onPress={() => isLastSlide ? router.replace('/(auth)/sign-up') : swiperRef.current?.scrollBy(1)}
+                className='w-11/12 mt-10'
+                />
         </SafeAreaView>
     )
 }
