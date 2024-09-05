@@ -2,6 +2,8 @@ import { Image, ScrollView, Text, View } from 'react-native'
 import { icons, images } from '../../constants'
 import InputField from '../../components/InputField'
 import { useState } from 'react'
+import CustomButton from '@/components/CustomButton'
+import { Link } from 'expo-router'
 
 const SignUp = () => {
     const [form, setForm] = useState({
@@ -9,6 +11,8 @@ const SignUp = () => {
         email: '',
         password: '',
     });
+
+    const onSignUpPress = async () => { };
 
     return (
         <ScrollView className='flex-1 bg-white'>
@@ -24,14 +28,45 @@ const SignUp = () => {
 
                 <View className='p-5'>
                     <InputField
-                        labelStyle
-                        label='name'
+                        label='Name'
                         placeholder='Enter your name'
                         icon={icons.person}
                         value={form.name}
-                        onChange={(value) => setForm({...form, name: value})}
+                        onChangeText={(value) => setForm({ ...form, name: value })}
                     />
+
+                    <InputField
+                        label='Email'
+                        placeholder='Enter your email'
+                        icon={icons.email}
+                        value={form.email}
+                        onChangeText={(value) => setForm({ ...form, email: value })}
+                    />
+
+                    <InputField
+                        label='Password'
+                        placeholder='Enter your password'
+                        icon={icons.lock}
+                        secureTextEntry={true}
+                        value={form.password}
+                        onChangeText={(value) => setForm({ ...form, password: value })}
+                    />
+
+                    <CustomButton
+                        title='Sign Up'
+                        onPress={onSignUpPress}
+                        className='mt-6'
+                    />
+
+                    {/* TODO: OAuth */}
+
+                    <Link href='/sign-in' className='text-lg text-center text-general-200 mt-10'>
+                        <Text>Already have an account? </Text>
+                        <Text className='text-primary-500'>Log In</Text>
+                    </Link>
                 </View>
+
+                {/* TODO: Verification Modal */}
             </View>
         </ScrollView>
     )
