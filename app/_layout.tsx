@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { ClerkProvider, ClerkLoaded } from '@clerk/clerk-expo'
 import { Slot } from 'expo-router'
+import { tokenCache } from '@/lib/auth';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -27,7 +28,7 @@ export default function RootLayout() {
       'Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env',
     )
   }
-  
+
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
@@ -39,7 +40,7 @@ export default function RootLayout() {
   }
 
   return (
-    <ClerkProvider publishableKey={publishableKey}>
+    <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
       <ClerkLoaded>
         <Stack>
           <Stack.Screen name="index" options={{ headerShown: false }} />
