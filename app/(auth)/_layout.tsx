@@ -1,7 +1,7 @@
 import { Stack } from 'expo-router';
 import 'react-native-reanimated';
 
-const AuthLayout = () => {
+const Layout = () => {
   return (
     <Stack>
       <Stack.Screen name="welcome" options={{ headerShown: false }} />
@@ -11,4 +11,4 @@ const AuthLayout = () => {
   );
 }
 
-export default AuthLayout
+export default Layout

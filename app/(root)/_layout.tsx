@@ -1,7 +1,7 @@
 import { Stack } from 'expo-router';
 import 'react-native-reanimated';
 
-const RootLayout = () => {
+const Layout = () => {
   return (
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -9,4 +9,4 @@ const RootLayout = () => {
   );
 }
 
-export default RootLayout
+export default Layout
