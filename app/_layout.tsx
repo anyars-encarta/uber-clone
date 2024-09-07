@@ -10,7 +10,6 @@ import { tokenCache } from '@/lib/auth';
 SplashScreen.preventAutoHideAsync();
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
-console.log(publishableKey)
 
 if (!publishableKey) {
   throw new Error(
