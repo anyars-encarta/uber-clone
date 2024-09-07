@@ -1,17 +1,15 @@
-import { Image, ScrollView, Text, View } from 'react-native'
-import { icons, images } from '../../constants'
-import InputField from '../../components/InputField'
+import { Alert, Image, ScrollView, Text, View } from 'react-native'
+import { icons, images } from '@/constants'
+import InputField from '@/components/InputField'
 import { useState } from 'react'
 import CustomButton from '@/components/CustomButton'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
 import OAuth from '@/components/OAuth'
 import { useSignUp } from '@clerk/clerk-expo'
-import { useRouter } from 'expo-router';
-import ReactNativeModal from 'react-native-modal'
+import { ReactNativeModal } from 'react-native-modal'
 
 const SignUp = () => {
     const { isLoaded, signUp, setActive } = useSignUp();
-    const router = useRouter();
 
     const [form, setForm] = useState({
         name: '',
@@ -26,9 +24,7 @@ const SignUp = () => {
     });
 
     const onSignUpPress = async () => {
-        if (!isLoaded) {
-            return;
-        }
+        if (!isLoaded) return;
 
         try {
             await signUp.create({
@@ -43,12 +39,13 @@ const SignUp = () => {
                 state: 'pending',
             })
         } catch (err: any) {
-            console.error(JSON.stringify(err, null, 2))
+            console.log(JSON.stringify(err, null, 2));
+            Alert.alert("Error", err.errors[0].longMessage)
         }
     };
 
     const onPressVerify = async () => {
-        if (!isLoaded) return
+        if (!isLoaded) return;
 
         try {
             const completeSignUp = await signUp.attemptEmailAddressVerification({
@@ -58,7 +55,7 @@ const SignUp = () => {
             if (completeSignUp.status === 'complete') {
                 // TODO: Create a database user!
                 await setActive({ session: completeSignUp.createdSessionId })
-                setVerification({ ...verification, state: 'success' })
+                setVerification({ ...verification, state: 'success' });
             } else {
                 setVerification({
                     ...verification,
@@ -71,7 +68,7 @@ const SignUp = () => {
                 ...verification,
                 error: err.errors[0].longMessage,
                 state: 'failed',
-            })
+            });
         }
     };
 
@@ -100,6 +97,7 @@ const SignUp = () => {
                         label='Email'
                         placeholder='Enter your email'
                         icon={icons.email}
+                        textContentType='emailAddress'
                         value={form.email}
                         onChangeText={(value) => setForm({ ...form, email: value })}
                     />
@@ -109,6 +107,7 @@ const SignUp = () => {
                         placeholder='Enter your password'
                         icon={icons.lock}
                         secureTextEntry={true}
+                        textContentType='password'
                         value={form.password}
                         onChangeText={(value) => setForm({ ...form, password: value })}
                     />
@@ -139,7 +138,7 @@ const SignUp = () => {
 
                         <CustomButton
                             title='Browse Home'
-                            onPress={() => router.replace('/(root)/(tabs)/home')}
+                            onPress={() => router.push('/(root)/(tabs)/home')}
                             className='mt-5'
                         />
                     </View>
