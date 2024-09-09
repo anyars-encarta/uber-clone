@@ -8,6 +8,7 @@ import OAuth from '@/components/OAuth'
 
 const SignUp = () => {
     const [form, setForm] = useState({
+        name: '',
         email: '',
         password: '',
     });
@@ -27,6 +28,14 @@ const SignUp = () => {
                 </View>
 
                 <View className='p-5'>
+                    <InputField
+                        label='Name'
+                        placeholder='Enter your name'
+                        icon={icons.person}
+                        value={form.name}
+                        onChangeText={(value) => setForm({ ...form, name: value })}
+                    />
+
                     <InputField
                         label='Email'
                         placeholder='Enter your email'
