@@ -1,19 +1,47 @@
-import { Image, ScrollView, Text, View } from 'react-native'
+import { Alert, Image, ScrollView, Text, View } from 'react-native'
 import { icons, images } from '../../constants'
-import InputField from '@/components/InputField'
-import { useState } from 'react'
-import CustomButton from '@/components/CustomButton'
-import { Link } from 'expo-router'
-import OAuth from '@/components/OAuth'
+import InputField from '@/components/InputField';
+import { useState } from 'react';
+import CustomButton from '@/components/CustomButton';
+import { Link } from 'expo-router';
+import OAuth from '@/components/OAuth';
+import { useSignUp } from '@clerk/clerk-expo';
 
 const SignUp = () => {
+    // const { isLoaded, signUp, setActive } = useSignUp();
+
     const [form, setForm] = useState({
         name: '',
         email: '',
         password: '',
     });
 
-    const onSignInPress = async () => { };
+    const [verification, setVerification] = useState({
+        state: 'default',
+        error: '',
+        code: '',
+    });
+
+    const onSignUpPress = async () => {
+        // if (!isLoaded) return;
+
+        // try {
+        //     await signUp.create({
+        //         emailAddress: form.email,
+        //         password: form.password,
+        //     })
+
+        //     await signUp.prepareEmailAddressVerification({ strategy: 'email_code' })
+
+        //     setVerification({
+        //         ...verification,
+        //         state: 'pending',
+        //     })
+        // } catch (err: any) {
+        //     console.log(JSON.stringify(err, null, 2));
+        //     Alert.alert("Error", err.errors[0].longMessage)
+        // }
+    };
 
     return (
         <ScrollView className='flex-1 bg-white'>
@@ -55,7 +83,7 @@ const SignUp = () => {
 
                     <CustomButton
                         title='Sign In'
-                        onPress={onSignInPress}
+                        onPress={onSignUpPress}
                         className='mt-6'
                     />
 
